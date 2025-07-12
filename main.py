@@ -16,8 +16,8 @@ async def read_root():
     return {"message": "Welcome to the Map Search API Proxy"}
 
 @app.get("/search")
-async def search(keyword: str):
-    response = requests.get(f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=25.0338,121.5646&radius=1000&keyword={keyword}&language=zh-TW&key={GOOGLE_API_KEY}").json()['results']
+async def search(keyword: str, loc: str = "25.09108,121.5598"):
+    response = requests.get(f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={loc}&radius=1500&keyword={keyword}&language=zh-TW&key={GOOGLE_API_KEY}").json()['results']
     result = []
     for place in response:
         place_info = {
