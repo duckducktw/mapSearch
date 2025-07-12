@@ -20,30 +20,30 @@ def search_maps(search: str):
 
     result_name = soup.select('.qBF1Pd')
     result_link = soup.select('.hfpxzc')
-    result_duv = soup.select('.bfdHYd')
+    result_div = soup.select('.bfdHYd')
 
-    print(result_name)
+    print(result_div)
 
     results = []
 
     if "DUwDvf" not in driver.page_source:
         for i in range(len(result_name)):
-            if( result_duv[i].select_one('.lcr4fd')):
-                results.append({
-                    "name": result_name[i].text,
-                    "address": [float(result_link[i]['href'].split('!4d')[1].split('!16s')[0]), float(result_link[i]['href'].split('!3d')[1].split('!4d')[0])],
-                    "web": result_duv[i].select_one('.lcr4fd')['href']
-                })
-            else:
-                results.append({
-                    "name": result_name[i].text,
-                    "address": [float(result_link[i]['href'].split('!4d')[1].split('!16s')[0]), float(result_link[i]['href'].split('!3d')[1].split('!4d')[0])], 
-                    "web": None
-                })
+            if(not result_div[i].select_one('.OcdnDb')):
+                if( result_div[i].select_one('.lcr4fd')):
+                    results.append({
+                        "name": result_name[i].text,
+                        "address": [float(result_link[i]['href'].split('!4d')[1].split('!16s')[0]), float(result_link[i]['href'].split('!3d')[1].split('!4d')[0])],
+                        "web": result_div[i].select_one('.lcr4fd')['href']
+                    })
+                else:
+                    results.append({
+                        "name": result_name[i].text,
+                        "address": [float(result_link[i]['href'].split('!4d')[1].split('!16s')[0]), float(result_link[i]['href'].split('!3d')[1].split('!4d')[0])], 
+                        "web": None
+                    })
     elif soup.select('.lfPIob'):
         while "/place/" not in driver.current_url:
             pass
-        print(soup.select_one('#QA0Szd > div > div > div.w6VYqd > div:nth-child(2) > div > div.e07Vkf.kA9KIf > div > div > div:nth-child(7) > div:nth-child(5) > a'))
         if (soup.select_one('#QA0Szd > div > div > div.w6VYqd > div:nth-child(2) > div > div.e07Vkf.kA9KIf > div > div > div:nth-child(7) > div:nth-child(5) > a')):
             results.append({
                 "name": soup.select_one('.lfPIob').text,
