@@ -31,13 +31,13 @@ def search_maps(search: str):
             if( result_duv[i].select_one('.lcr4fd')):
                 results.append({
                     "name": result_name[i].text,
-                    "address": result_link[i]['href'].split('!3d')[1].split('!4d')[0] + ", " + result_link[i]['href'].split('!4d')[1].split('!16s')[0],
+                    "address": [float(result_link[i]['href'].split('!4d')[1].split('!16s')[0]), float(result_link[i]['href'].split('!3d')[1].split('!4d')[0])],
                     "web": result_duv[i].select_one('.lcr4fd')['href']
                 })
             else:
                 results.append({
                     "name": result_name[i].text,
-                    "address": result_link[i]['href'].split('!3d')[1].split('!4d')[0] + ", " + result_link[i]['href'].split('!4d')[1].split('!16s')[0], 
+                    "address": [float(result_link[i]['href'].split('!4d')[1].split('!16s')[0]), float(result_link[i]['href'].split('!3d')[1].split('!4d')[0])], 
                     "web": None
                 })
     elif soup.select('.lfPIob'):
@@ -47,13 +47,13 @@ def search_maps(search: str):
         if (soup.select_one('#QA0Szd > div > div > div.w6VYqd > div:nth-child(2) > div > div.e07Vkf.kA9KIf > div > div > div:nth-child(7) > div:nth-child(5) > a')):
             results.append({
                 "name": soup.select_one('.lfPIob').text,
-                "address": driver.current_url.split('/@')[1].split(',')[0] + ", " + driver.current_url.split(',')[1].split(',')[0],
+                "address": [float(driver.current_url.split(',')[1].split(',')[0]), float(pdriver.current_url.split('/@')[1].split(',')[0])],
                 "web": soup.select_one('#QA0Szd > div > div > div.w6VYqd > div:nth-child(2) > div > div.e07Vkf.kA9KIf > div > div > div:nth-child(7) > div:nth-child(5) > a')['href']
             })
         else:
             results.append({
                 "name": soup.select_one('.lfPIob').text,
-                "address": driver.current_url.split('/@')[1].split(',')[0] + ", " + driver.current_url.split(',')[1].split(',')[0]
+                "address": [float(driver.current_url.split(',')[1].split(',')[0]), float(driver.current_url.split('/@')[1].split(',')[0])]
             })
     else:
         results.append({"message": "No results found"})
